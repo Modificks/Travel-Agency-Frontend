@@ -1,0 +1,558 @@
+.home-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1400px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 30px;
+    background: #f7f9fc;
+    font-family: "Segoe UI", sans-serif;
+    box-sizing: border-box;
+}
+
+.lang-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 100;
+    transition: all 0.2s;
+}
+
+.lang-button:hover {
+    background-color: #f0f0f0;
+    border-color: #999;
+}
+
+.home-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 15px 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin-bottom: 25px;
+    margin-top: 40px;
+    box-sizing: border-box;
+}
+
+.home-title {
+    font-size: 26px;
+    color: #333;
+    font-weight: 600;
+    margin: 0;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.admin-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.admin-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.profile-btn,
+.my-trips-btn {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.profile-btn {
+    background-color: #007bff;
+}
+
+.profile-btn:hover {
+    background-color: #0056b3;
+}
+
+.my-trips-btn {
+    background-color: #28a745;
+}
+
+.my-trips-btn:hover {
+    background-color: #218838;
+}
+
+.controls-panel {
+    width: 100%;
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.sort-controls {
+    display: flex;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-grow: 1;
+}
+
+.control-group label {
+    font-size: 14px;
+    color: #555;
+    font-weight: 600;
+}
+
+.control-group input,
+.control-group select {
+    font-size: 15px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-family: "Segoe UI", sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.control-group input:focus,
+.control-group select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.voucher-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.voucher-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.voucher-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.voucher-content {
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+.voucher-header {
+    display: block;
+}
+
+.voucher-title {
+    margin: 0;
+    font-size: 18px;
+    color: #222;
+    display: flex;
+    align-items: center;
+}
+
+.hot-icon {
+    margin-left: 8px;
+    font-size: 1.1rem;
+}
+
+.voucher-description {
+    margin: 6px 0;
+    color: #555;
+}
+
+.voucher-price {
+    font-weight: bold;
+    color: #27ae60;
+    margin-top: 8px;
+    margin-bottom: 15px;
+}
+
+.order-btn {
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.order-btn:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+.order-btn:disabled {
+    background-color: #c0c0c0;
+    cursor: not-allowed;
+}
+
+.manager-actions-wrapper,
+.admin-actions-wrapper {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.actions-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #777;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.manager-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.manager-hot-btn,
+.manager-status-btn {
+    padding: 8px 10px;
+    border: 2px solid;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    box-sizing: border-box;
+    background: transparent;
+    transition: all 0.2s;
+}
+
+.manager-hot-btn {
+    border-color: #ffc107;
+    color: #ffc107;
+}
+
+.manager-hot-btn:hover:not(:disabled) {
+    color: #e0a800;
+    border-color: #e0a800;
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.manager-status-btn {
+    border-color: #17a2b8;
+    color: #17a2b8;
+}
+
+.manager-status-btn:hover:not(:disabled) {
+    color: #138496;
+    border-color: #138496;
+    background-color: rgba(23, 162, 184, 0.1);
+}
+
+.manager-hot-btn:disabled,
+.manager-status-btn:disabled {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.update-btn,
+.delete-btn {
+    flex: 1;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.update-btn {
+    background-color: transparent;
+    border: 2px solid #ffc107;
+    color: #ffc107;
+}
+
+.update-btn:hover {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #e0a800;
+    border-color: #e0a800;
+    transform: translateY(-1px);
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: 2px solid #dc3545;
+}
+
+.delete-btn:hover:not(:disabled) {
+    background-color: #c82333;
+    border-color: #c82333;
+    transform: translateY(-1px);
+}
+
+.delete-btn:disabled {
+    background-color: #e0a0a0;
+    border-color: #e0a0a0;
+    cursor: not-allowed;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.page-info {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+.pagination-btn {
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.pagination-btn:hover {
+    background-color: #0056b3;
+}
+
+.pagination-btn:disabled {
+    background-color: #c0c0c0;
+    cursor: not-allowed;
+}
+
+.no-vouchers {
+    font-size: 16px;
+    color: #888;
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.loading {
+    font-size: 18px;
+    color: #555;
+    padding: 40px;
+    text-align: center;
+    width: 100%;
+}
+
+.error,
+.error-message {
+    color: #d9534f;
+    font-weight: 500;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-title {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+    color: #333;
+    font-weight: 600;
+}
+
+.modal-message {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.modal-voucher-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-voucher-info strong {
+    color: #333;
+    font-size: 16px;
+}
+
+.modal-voucher-info span {
+    color: #27ae60;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.modal-voucher-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.modal-cancel-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #6c757d;
+    color: white;
+}
+
+.modal-cancel-btn:hover {
+    background-color: #5a6268;
+}
+
+.modal-delete-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #dc3545;
+    color: white;
+}
+
+.modal-delete-btn:hover:not(:disabled) {
+    background-color: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.modal-delete-btn:disabled {
+    background-color: #e0a0a0;
+    cursor: not-allowed;
+}
+
+.modal-content .form-group {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.modal-content .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.modal-content .modal-confirm-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-content .modal-confirm-btn:disabled {
+    background-color: #ccc;
+}

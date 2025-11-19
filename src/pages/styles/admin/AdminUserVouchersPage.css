@@ -1,0 +1,131 @@
+.admin-vouchers-container {
+    position: relative;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: #f8f9fa;
+}
+
+.lang-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    padding: 10px 16px;
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.lang-button:hover {
+    background-color: #e0e0e0;
+}
+
+.admin-card {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.admin-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f1f1f1;
+}
+
+.admin-title {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 28px;
+}
+
+.admin-subtitle {
+    margin: 0;
+    color: #6c757d;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.table-responsive {
+    margin-bottom: 30px;
+    overflow-x: auto;
+}
+
+.voucher-table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.voucher-table th {
+    padding: 16px;
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    color: #495057;
+    font-weight: 600;
+    text-align: left;
+}
+
+.voucher-table td {
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+}
+
+.voucher-table tr:last-child td {
+    border-bottom: none;
+}
+
+.voucher-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.price-cell {
+    color: #28a745;
+    font-weight: 700;
+}
+
+.loading-text {
+    padding: 40px;
+    color: #6c757d;
+    font-size: 18px;
+    text-align: center;
+}
+
+.error-text {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8d7da;
+    border-radius: 8px;
+    color: #dc3545;
+}
+
+.info-text {
+    padding: 20px;
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #6c757d;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.back-btn:hover {
+    background-color: #565e64;
+}
