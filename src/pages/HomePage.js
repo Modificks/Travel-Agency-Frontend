@@ -17,7 +17,17 @@ const HomePage = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [orderingVoucherId, setOrderingVoucherId] = useState(null);
+
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [paymentVoucher, setPaymentVoucher] = useState(null);
+    const [paymentData, setPaymentData] = useState({
+        cardNumber: "",
+        cvv: "",
+        expiryDate: ""
+    });
+    const [isOrdering, setIsOrdering] = useState(false);
+    const [paymentError, setPaymentError] = useState(null);
+
     const [deletingVoucherId, setDeletingVoucherId] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [voucherToDelete, setVoucherToDelete] = useState(null);
@@ -89,7 +99,7 @@ const HomePage = () => {
         };
 
         void fetchVouchers();
-    }, [authorizedFetch, searchParams, page, sort, filters, t]);
+    }, [authorizedFetch, searchParams, page, sort, filters, t, API_URL]);
 
     const handleParamChange = (newParams) => {
         const allParams = new URLSearchParams(searchParams);
@@ -137,38 +147,83 @@ const HomePage = () => {
         navigate(`/vouchers/${id}`);
     };
 
-    const handleOrderVoucher = async (e, voucherId) => {
+    const openPaymentModal = (e, voucher) => {
         e.stopPropagation();
+        setPaymentVoucher(voucher);
+        setPaymentData({cardNumber: "", cvv: "", expiryDate: ""});
+        setPaymentError(null);
+        setShowPaymentModal(true);
+    };
 
-        setOrderingVoucherId(voucherId);
-        setError(null);
+    const closePaymentModal = () => {
+        setShowPaymentModal(false);
+        setPaymentVoucher(null);
+        setPaymentError(null);
+    };
+
+    const handlePaymentInputChange = (e) => {
+        const {name, value} = e.target;
+
+        if (name === "cardNumber") {
+            if (/^\d{0,16}$/.test(value)) {
+                setPaymentData(prev => ({...prev, [name]: value}));
+            }
+        } else if (name === "cvv") {
+            if (/^\d{0,3}$/.test(value)) {
+                setPaymentData(prev => ({...prev, [name]: value}));
+            }
+        } else if (name === "expiryDate") {
+            let formattedValue = value;
+            if (value.length === 2 && paymentData.expiryDate.length === 1) {
+                formattedValue += "/";
+            }
+            if (/^\d{0,2}\/?\d{0,2}$/.test(formattedValue) && formattedValue.length <= 5) {
+                setPaymentData(prev => ({...prev, [name]: formattedValue}));
+            }
+        }
+    };
+
+    const submitOrder = async () => {
+        if (!paymentVoucher) return;
+
+        setIsOrdering(true);
+        setPaymentError(null);
+
+        const requestBody = {
+            voucherId: paymentVoucher.id,
+            cardNumber: paymentData.cardNumber,
+            cvv: paymentData.cvv,
+            expiryDate: paymentData.expiryDate
+        };
 
         try {
             const res = await authorizedFetch(
-                `${API_URL}/api/vouchers/${voucherId}/order`,
+                `${API_URL}/api/vouchers/order`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
-                    }
+                    },
+                    body: JSON.stringify(requestBody)
                 }
             );
 
             if (!res.ok) {
                 const errorData = await res.json().catch(() => ({}));
-                setError(errorData.message);
+                setPaymentError(t(errorData.message) || errorData.message || t("home.orderFailed"));
+            } else {
+                const updatedVoucher = await res.json();
+
+                setVouchers(prevVouchers =>
+                    prevVouchers.map(v => v.id === paymentVoucher.id ? updatedVoucher : v)
+                );
+                closePaymentModal();
             }
 
-            const updatedVoucher = await res.json();
-
-            setVouchers(prevVouchers =>
-                prevVouchers.map(v => v.id === voucherId ? updatedVoucher : v)
-            );
-
         } catch (err) {
-            setError(err.message);
+            setPaymentError(err.message);
         } finally {
-            setOrderingVoucherId(null);
+            setIsOrdering(false);
         }
     };
 
@@ -405,10 +460,10 @@ const HomePage = () => {
 
                             <button
                                 className="order-btn"
-                                onClick={(e) => handleOrderVoucher(e, v.id)}
-                                disabled={orderingVoucherId === v.id}
+                                onClick={(e) => openPaymentModal(e, v)}
+                                disabled={v.voucherStatus === "PAID"}
                             >
-                                {orderingVoucherId === v.id ? t("home.ordering") : t("home.order")}
+                                {t("home.order")}
                             </button>
 
                             {isManager && (
@@ -499,6 +554,78 @@ const HomePage = () => {
                             </button>
                             <button className="modal-delete-btn" onClick={confirmDelete} disabled={deletingVoucherId}>
                                 {deletingVoucherId ? t("admin.deleting") : t("admin.confirmDeleteBtn")}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showPaymentModal && (
+                <div className="modal-overlay" onClick={closePaymentModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h2 className="modal-title">{t("payment.title") || "Payment Details"}</h2>
+
+                        {paymentVoucher && (
+                            <div className="modal-voucher-info">
+                                <strong>{paymentVoucher.title}</strong>
+                                <span>${paymentVoucher.price?.toFixed(2)}</span>
+                            </div>
+                        )}
+
+                        {paymentError && <p className="error-message">{paymentError}</p>}
+
+                        <div className="payment-form">
+                            <div className="form-group">
+                                <label
+                                    htmlFor="cardNumber">{t("payment.cardNumber") || "Card Number (16 digits)"}</label>
+                                <input
+                                    type="text"
+                                    id="cardNumber"
+                                    name="cardNumber"
+                                    value={paymentData.cardNumber}
+                                    onChange={handlePaymentInputChange}
+                                    placeholder="0000000000000000"
+                                    className="payment-input"
+                                />
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group half-width">
+                                    <label htmlFor="expiryDate">{t("payment.expiryDate") || "Expiry (MM/YY)"}</label>
+                                    <input
+                                        type="text"
+                                        id="expiryDate"
+                                        name="expiryDate"
+                                        value={paymentData.expiryDate}
+                                        onChange={handlePaymentInputChange}
+                                        placeholder="MM/YY"
+                                        className="payment-input"
+                                    />
+                                </div>
+                                <div className="form-group half-width">
+                                    <label htmlFor="cvv">{t("payment.cvv") || "CVV"}</label>
+                                    <input
+                                        type="password"
+                                        id="cvv"
+                                        name="cvv"
+                                        value={paymentData.cvv}
+                                        onChange={handlePaymentInputChange}
+                                        placeholder="123"
+                                        className="payment-input"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="modal-actions">
+                            <button className="modal-cancel-btn" onClick={closePaymentModal}>
+                                {t("admin.cancel")}
+                            </button>
+                            <button
+                                className="modal-confirm-btn"
+                                onClick={submitOrder}
+                                disabled={isOrdering || paymentData.cardNumber.length !== 16 || paymentData.cvv.length !== 3 || paymentData.expiryDate.length !== 5}
+                            >
+                                {isOrdering ? t("home.ordering") : t("payment.pay")}
                             </button>
                         </div>
                     </div>

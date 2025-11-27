@@ -149,6 +149,13 @@
     "text": "Oops! It looks like you've hit a page that doesn't exist.",
     "title": "404"
   },
+  "payment": {
+    "title": "Payment",
+    "pay": "Pay",
+    "cardNumber": "Card number",
+    "expiryDate": "Card expire date",
+    "cvv": "cvv"
+  },
   "profile": {
     "balance": "Account Balance",
     "cancel": "Cancel",
